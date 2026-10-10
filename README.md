@@ -16,7 +16,7 @@ Plataforma de consultoria e planejamento de consórcios desenvolvida em Python e
 - Configuração de Deploy (Render)
 - Segurança
 
----
+----
 
 ## Visão Geral
 
