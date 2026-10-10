@@ -1,1 +1,117 @@
 # consorcio-amigo-ai
+
+# ConsórcioAmigo AI - Copiloto Financeiro e Inteligência Patrimonial
+
+Plataforma de consultoria e planejamento de consórcios desenvolvida em Python e Streamlit, integrada à API da Groq (modelo openai/gpt-oss-120b). A aplicação realiza análises regionais de mercado, simulações de Custo Efetivo Total (CET), ordenação estratégica de lances e projeções temporais de reajustes.
+
+---
+
+## Sumário
+- Visão Geral
+- Tecnologias Utilizadas
+- Engenharia de Prompts
+- Regras de Negócio e Premissas Financeiras
+- Estrutura do Relatório Gerado
+- Instalação e Execução Local
+- Configuração de Deploy (Render)
+- Segurança
+
+---
+
+## Visão Geral
+
+O ConsórcioAmigo AI auxilia no planejamento financeiro para aquisição de bens (imóveis, veículos, serviços e equipamentos). O sistema avalia a capacidade financeira do usuário, analisa a viabilidade da carta pretendida em relação à região informada e compara diretamente os custos do consórcio contra o financiamento bancário.
+
+---
+
+## Tecnologias Utilizadas
+
+- Linguagem: Python 3.10+
+- Interface Gráfica: Streamlit
+- Processamento de Linguagem Natural: Groq API (openai/gpt-oss-120b)
+- Gestão de Variáveis de Ambiente: python-dotenv
+- Hospedagem e Deploy: Render (Web Service)
+
+---
+
+## Engenharia de Prompts
+
+A integração com o modelo de linguagem segue padrões de prompt engineering para garantir precisão e estabilidade:
+
+1. Alinhamento de Dados: Valores de parcela estimada e comprometimento de renda são calculados via Python e repassados ao prompt para evitar divergências nos relatórios.
+2. Nomenclatura Padronizada: Uso obrigatório do termo "Carta inicial" para referir-se ao valor digitado pelo usuário.
+3. Tolerância a Tokens: Configuração de max_tokens=4096 para garantir a conclusão integral de todas as seções do relatório.
+4. Formatação de Saída: Respostas geradas estritamente em Markdown limpo, sem utilização de tags HTML.
+
+---
+
+## Regras de Negócio e Premissas Financeiras
+
+### Financiamento Bancário (CET Realista)
+- Imóveis: CET estimado entre 12,4% e 13,8% ao ano (juros nominais de 11,0% a 12,5% a.a. + TR + seguros MIP/DFI e taxas). Prazos típicos de 300 a 360 meses.
+- Veículos: CET estimado entre 25% e 35% ao ano (1,8% a 2,5% ao mês). Prazos típicos de 48 a 60 meses.
+
+### Consórcio
+- Imóveis: Taxa de administração média de 14% a 17% total distribuída no contrato (180 a 200 meses).
+- Veículos: Taxa de administração média de 12% a 16% total distribuída no contrato (60 a 72 meses).
+
+### Estratégia de Lances
+- Média de Mercado: Contemplações por lance livre costumam exigir entre 25% e 50% do valor da carta.
+- Uso de FGTS: Permitido isoladamente em imóveis, mesmo com R$ 0,00 de recursos próprios.
+- Lance Embutido: Recomendado como complemento (10% a 30% da carta) quando os recursos informados forem insuficientes para a urgência desejada.
+- Sem Recursos para Lance: Caso o usuário não possua recursos, o sistema omite a tabela de ranking e apresenta orientações sobre o funcionamento dos sorteios.
+
+### Alinhamento com a Urgência
+- Imediata (1 a 3 meses): Requer lances competitivos/agressivos (>= 35% a 50%).
+- Médio Prazo (até 1 ano): Requer lances intermediários (20% a 35%).
+- Nenhuma (Sorteio/Investimento): Foco no longo prazo (60 a 200 meses) e menor custo acumulado.
+
+---
+
+## Estrutura do Relatório Gerado
+
+O relatório final é composto por 7 seções:
+
+1. Análise de Mercado Regional e Adequação da Carta
+2. Veredito e Recomendação do Valor Ideal da Carta
+3. Diagnóstico de Orçamento, Comprometimento e Alinhamento de Prazos
+4. Estratégia e Análise de Lances
+5. Comparativo Tático: Consórcio vs. Financiamento (CET Realista)
+6. Simulação de Impacto de Reajustes e Custos Comparativos (Tabelas temporais e adicionais)
+7. Alertas de Segurança e Boas Práticas (Medidas antifraude e verificação na ABAC/Bacen)
+
+---
+
+## Instalação e Execução Local
+
+1. Clone o repositório:
+   git clone https://github.com/SEU_USUARIO/NOME_DO_REPOSITORIO.git
+   cd NOME_DO_REPOSITORIO
+
+2. Crie e ative um ambiente virtual:
+   python -m venv .venv
+   source .venv/bin/activate  # Linux/Mac
+   .venv\Scripts\activate     # Windows
+
+3. Instale as dependências:
+   pip install -r requirements.txt
+
+4. Crie um arquivo .env na raiz do projeto:
+   GROQ_API_KEY=sua_chave_aqui
+
+5. Execute a aplicação:
+   streamlit run app.py
+
+---
+
+## Configuração de Deploy (Render)
+
+- Build Command: pip install -r requirements.txt
+- Start Command: streamlit run app.py --server.port $PORT --server.address 0.0.0.0
+- Environment Variables: Adicionar GROQ_API_KEY no painel do Render.
+
+---
+
+## Segurança
+
+O arquivo .gitignore está configurado para ignorar o arquivo .env, diretórios de cache (__pycache__/) e pastas temporárias, impedindo a exposição indesejada de credenciais de API no repositório.
