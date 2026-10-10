@@ -82,32 +82,10 @@ O relatório final é composto por 7 seções:
 
 ---
 
-## Instalação e Execução Local
-
-1. Clone o repositório:
-   git clone https://github.com/SEU_USUARIO/NOME_DO_REPOSITORIO.git
-   cd NOME_DO_REPOSITORIO
-
-2. Crie e ative um ambiente virtual:
-   python -m venv .venv
-   source .venv/bin/activate  # Linux/Mac
-   .venv\Scripts\activate     # Windows
-
-3. Instale as dependências:
-   pip install -r requirements.txt
-
-4. Crie um arquivo .env na raiz do projeto:
-   GROQ_API_KEY=sua_chave_aqui
-
-5. Execute a aplicação:
-   streamlit run app.py
-
----
-
 ## Configuração de Deploy (Render)
 
 - Build Command: pip install -r requirements.txt
-- Start Command: streamlit run app.py --server.port $PORT --server.address 0.0.0.0
+- Start Command: streamlit run app.py
 - Environment Variables: Adicionar GROQ_API_KEY no painel do Render.
 
 ---
